@@ -1,0 +1,6 @@
+{
+  "name": "Akıllı Okul Zili",
+  "description": "Öğretmenler için zil gürültüsü olmadan ders giriş ve çıkışlarını sesli ve yazılı bildirimlerle hatırlatan akıllı ders programı ve takip uygulaması.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
