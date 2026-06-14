@@ -3,12 +3,28 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/lib/AuthContext";
 import NotificationHandler from '@/components/NotificationHandler';
+import BildirimAc from '@/components/BildirimAc'; // Butonu içeri al
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
   subsets: ["latin"],
 });
 
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="tr">
+      <body>
+        {/* BUTON BURADA GÖRÜNECEK */}
+        <div style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 9999 }}>
+          <BildirimAc />
+        </div>
+        
+        {children}
+      </body>
+    </html>
+  );
+}
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="tr">
