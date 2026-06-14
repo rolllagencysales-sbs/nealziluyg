@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-// Dosya yollarını @/ yerine ../ ile güncelledik
-import { AuthProvider } from "../context/AuthContext"; 
 import NotificationHandler from "../components/NotificationHandler";
 
 const openSans = Open_Sans({
@@ -23,10 +21,8 @@ export default function RootLayout({
   return (
     <html lang="tr" className={openSans.variable}>
       <body>
-        <AuthProvider>
-          <NotificationHandler />
-          {children}
-        </AuthProvider>
+        <NotificationHandler />
+        {children}
       </body>
     </html>
   );
