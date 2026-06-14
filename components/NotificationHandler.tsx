@@ -1,34 +1,67 @@
 'use client';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
-export default function NotificationHandler() {
+export default function NotificationButton() {
+  const [status, setStatus] = useState<string>('');
   const supabase = createClientComponentClient();
 
-  useEffect(() => {
-    async function init() {
-      if ('serviceWorker' in navigator && 'PushManager' in window) {
-        const registration = await navigator.serviceWorker.register('/sw.js');
-        const permission = await Notification.requestPermission();
-        
-        if (permission === 'granted') {
-          const sub = await registration.pushManager.subscribe({
-            userVisibleOnly: true,
-            applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-          });
+  const handlePermission = async () => {
+    try {
+      setStatus('İzin isteniyor...');
 
-          const { data: { user } } = await supabase.auth.getUser();
-          if (user) {
-            await supabase.from('push_subscriptions').upsert({
-              teacher_id: user.id,
-              subscription: sub
-            });
-          }
-        }
+      // 1. Tarayıcı desteğini kontrol et
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        setStatus('Tarayıcınız bildirim desteklemiyor.');
+        return;
       }
-    }
-    init();
-  }, [supabase]);
 
-  return null;
+      // 2. Bildirim izni iste
+      const permission = await Notification.requestPermission();
+      
+      if (permission !== 'granted') {
+        setStatus('İzin reddedildi. Lütfen tarayıcı ayarlarından zil ikonuna basıp izin verin.');
+        return;
+      }
+
+      // 3. Service Worker'ı al
+      const registration = await navigator.serviceWorker.ready;
+
+      // 4. Push Aboneliği oluştur (VAPID Key'i ENV'den çekiyoruz)
+      const subscription = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+      });
+
+      // 5. Supabase'e kaydet
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { error } = await supabase.from('push_subscriptions').upsert({
+          teacher_id: user.id,
+          subscription: subscription
+        });
+
+        if (error) throw error;
+        setStatus('Zil başarıyla açıldı! ✅');
+      } else {
+        setStatus('Önce giriş yapmalısınız.');
+      }
+
+    } catch (error) {
+      console.error(error);
+      setStatus('Bir hata oluştu.');
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <button 
+        onClick={handlePermission}
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+      >
+        🔔 Bildirimleri / Zil Sesini Aç
+      </button>
+      {status && <p className="text-sm text-gray-500">{status}</p>}
+    </div>
+  );
 }

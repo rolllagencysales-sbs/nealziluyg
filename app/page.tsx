@@ -1,5 +1,6 @@
 'use client';
-
+// app/dashboard/page.tsx (Veya hangi sayfada görünmesini istiyorsan)
+import NotificationButton from '@/components/NotificationButton';
 import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/AuthContext';
@@ -9,6 +10,25 @@ import styles from './page.module.css';
 
 export default function Home() {
   const { user, loading } = useAuth();
+export default function DashboardPage() {
+  return (
+    <main className="p-4">
+      <h1 className="text-2xl font-bold">Öğretmen Paneli</h1>
+      
+      <div className="my-6 p-4 border rounded-lg bg-gray-50">
+        <h2 className="text-lg font-semibold mb-2">Zil Ayarları</h2>
+        <p className="mb-4 text-sm text-gray-600">
+          Ders saatlerinde telefonunuza bildirim ve alarm gelmesi için aşağıdaki butona basıp izin verin.
+        </p>
+        
+        {/* BUTONU BURAYA KOYUYORUZ */}
+        <NotificationButton />
+      </div>
+
+      {/* Sayfanın geri kalan diğer içerikleri (ders programı vb.) */}
+    </main>
+  );
+}
 
   return (
     <>
