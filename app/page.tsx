@@ -10,6 +10,7 @@ import styles from './page.module.css';
 
 export default function Home() {
   const { user, loading } = useAuth();
+  
 export default function DashboardPage() {
   return (
     <main className="p-4">
