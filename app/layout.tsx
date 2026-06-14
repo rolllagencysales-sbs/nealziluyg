@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/context/AuthContext"; // AuthProvider yolun doğru mu kontrol et
-import NotificationHandler from "@/components/NotificationHandler";
+// Dosya yollarını @/ yerine ../ ile güncelledik
+import { AuthProvider } from "../context/AuthContext"; 
+import NotificationHandler from "../components/NotificationHandler";
 
 const openSans = Open_Sans({
   subsets: ["latin"],

@@ -1,11 +1,12 @@
 'use client';
-import { useAuth } from "@/context/AuthContext"; // useAuth yolun doğru mu kontrol et
-import NotificationButton from "@/components/NotificationButton";
+// Dosya yollarını @/ yerine ../ ile güncelledik
+import { useAuth } from "../context/AuthContext"; 
+import NotificationButton from "../components/NotificationButton";
 
 export default function DashboardPage() {
   const { user, loading } = useAuth();
 
-  if (loading) return <div className="p-10">Yükleniyor...</div>;
+  if (loading) return <div className="p-10 text-center">Yükleniyor...</div>;
 
   return (
     <main className="p-4">
@@ -17,14 +18,12 @@ export default function DashboardPage() {
           <p className="text-blue-600 mb-4 text-sm">
             Ders saatlerinde alarmın çalması için bildirimleri aktif etmeniz gerekmektedir.
           </p>
-          {/* Bildirim butonu */}
           <NotificationButton />
         </div>
 
-        {/* Buraya ders programı gelecek */}
-        <div className="bg-white shadow rounded-lg p-4">
-          <p>Hoş geldin, {user?.email}</p>
-          {/* Mevcut ders programı kodlarını buraya ekleyebilirsin */}
+        <div className="bg-white shadow rounded-lg p-6 border">
+          <h3 className="font-medium mb-2">Hesap Bilgileri</h3>
+          <p className="text-gray-600 text-sm">Giriş yapılan hesap: {user?.email}</p>
         </div>
       </div>
     </main>
