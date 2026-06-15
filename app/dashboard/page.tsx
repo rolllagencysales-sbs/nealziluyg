@@ -13,6 +13,7 @@ import {
   Clock, Bell, BellOff, VolumeX, ShieldAlert, Award
 } from 'lucide-react';
 import styles from './page.module.css';
+import NotificationButton from "@/components/NotificationButton";
 
 export default function Dashboard() {
   const router = useRouter();
