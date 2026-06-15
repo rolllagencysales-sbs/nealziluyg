@@ -9,14 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "lucide-react": "latest",
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.1",
     "clsx": "latest",
-    "tailwind-merge": "latest",
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "@supabase/supabase-js": "latest",
+    "lucide-react": "latest",
     "next": "latest",
     "react": "latest",
     "react-dom": "latest",
+    "tailwind-merge": "latest",
     "web-push": "latest"
   },
   "devDependencies": {
