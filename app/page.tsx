@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 // Yolu tam olarak böyle dene, eğer klasör root'taysa bu doğrudur
-import NotificationButton from "../components/NotificationButton";
+import NotificationButton from "@/components/NotificationButton";
 
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null);
