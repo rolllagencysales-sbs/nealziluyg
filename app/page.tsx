@@ -1,22 +1,10 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useAuth } from '@/lib/AuthContext';
 // Yolu tam olarak böyle dene, eğer klasör root'taysa bu doğrudur
 import NotificationButton from "../components/NotificationButton";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const supabase = createClientComponentClient();
-
-  useEffect(() => {
-    async function getUser() {
-      const { data: { user: supabaseUser } } = await supabase.auth.getUser();
-      setUser(supabaseUser);
-      setLoading(false);
-    }
-    getUser();
-  }, [supabase]);
+  const { user, loading } = useAuth();
 
   if (loading) return <div className="p-10 text-center">Yükleniyor...</div>;
 

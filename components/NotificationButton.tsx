@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useAuth } from '@/lib/AuthContext';
+import { supabase } from '@/lib/supabase';
 
 export default function NotificationButton() {
   const [status, setStatus] = useState<string>('');
-  const supabase = createClientComponentClient();
+  const { user, isDemoMode } = useAuth();
 
   const handlePermission = async () => {
     try {
@@ -33,16 +34,20 @@ export default function NotificationButton() {
         applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
       });
 
-      // 5. Supabase'e kaydet
-      const { data: { user } } = await supabase.auth.getUser();
+      // 5. Kaydet (Demo Modunda yerel hafıza, aksi halde Supabase)
       if (user) {
-        const { error } = await supabase.from('push_subscriptions').upsert({
-          teacher_id: user.id,
-          subscription: subscription
-        });
+        if (isDemoMode) {
+          localStorage.setItem('demo_push_subscription', JSON.stringify(subscription));
+          setStatus('Zil başarıyla açıldı! ✅ (Demo Modu)');
+        } else {
+          const { error } = await supabase.from('push_subscriptions').upsert({
+            teacher_id: user.id,
+            subscription: subscription
+          });
 
-        if (error) throw error;
-        setStatus('Zil başarıyla açıldı! ✅');
+          if (error) throw error;
+          setStatus('Zil başarıyla açıldı! ✅');
+        }
       } else {
         setStatus('Önce giriş yapmalısınız.');
       }

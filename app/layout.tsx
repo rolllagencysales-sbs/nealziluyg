@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import NotificationHandler from "../components/NotificationHandler";
+import { AuthProvider } from "@/lib/AuthContext";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -21,8 +21,9 @@ export default function RootLayout({
   return (
     <html lang="tr" className={openSans.variable}>
       <body>
-        <NotificationHandler />
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
