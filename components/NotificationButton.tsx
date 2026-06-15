@@ -59,14 +59,27 @@ export default function NotificationButton() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', width: '100%' }}>
       <button 
         onClick={handlePermission}
-        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        className="glass-button glass-button-primary"
+        style={{ width: '100%' }}
       >
         🔔 Bildirimleri / Zil Sesini Aç
       </button>
-      {status && <p className="text-sm text-gray-500">{status}</p>}
+      {status && (
+        <p 
+          style={{ 
+            fontSize: '0.85rem', 
+            color: status.includes('reddedildi') || status.includes('hata') ? 'var(--accent-danger)' : status.includes('başarıyla') || status.includes('✅') ? 'var(--accent-success)' : 'var(--text-secondary)',
+            textAlign: 'center',
+            marginTop: '4px',
+            lineHeight: '1.4'
+          }}
+        >
+          {status}
+        </p>
+      )}
     </div>
   );
 }
