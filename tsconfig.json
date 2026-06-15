@@ -33,3 +33,13 @@
   ],
   "exclude": ["node_modules"]
 }
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]  // Eğer components root dizindeyse
+      // VEYA
+      "@/*": ["./src/*"] // Eğer components src içindeyse
+    }
+  }
+}
