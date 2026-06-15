@@ -1,11 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    ignoreBuildErrors: true, // TypeScript hatalarını görmezden gel
-  },
-  eslint: {
-    ignoreDuringBuilds: true, // Lint hatalarını görmezden gel
-  },
+  // Gereksiz veya hatalı olan eslint/typescript bloklarını temizledik
+  // Turbopack ile uyumlu en temel ayar:
+  experimental: {
+    // Gerekirse buraya ayar eklenebilir
+  }
 };
 
 export default nextConfig;
